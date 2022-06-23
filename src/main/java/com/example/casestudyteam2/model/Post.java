@@ -21,8 +21,7 @@ public class Post {
 
     private String imageUrl;
 
-    @Transient
-    private MultipartFile imageFile;
+    private String imageFile;
 
     @ManyToOne
     private Users userPost;
@@ -38,7 +37,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long idPost, String content, String status, String imageUrl, MultipartFile imageFile, Users userPost, Set<LikePost> likes, Set<Comment> comments) {
+    public Post(Long idPost, String content, String status, String imageUrl, String imageFile, Users userPost, Set<LikePost> likes, Set<Comment> comments) {
         this.idPost = idPost;
         this.content = content;
         this.status = status;
@@ -81,11 +80,11 @@ public class Post {
         this.imageUrl = imageUrl;
     }
 
-    public MultipartFile getImageFile() {
+    public String getImageFile() {
         return imageFile;
     }
 
-    public void setImageFile(MultipartFile imageFile) {
+    public void setImageFile(String imageFile) {
         this.imageFile = imageFile;
     }
 
