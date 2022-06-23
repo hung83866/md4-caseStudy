@@ -1,5 +1,7 @@
 package com.example.casestudyteam2.controller;
 
+import com.example.casestudyteam2.dto.request.ChangePasswordForm;
+import com.example.casestudyteam2.dto.request.ChangeProfileForm;
 import com.example.casestudyteam2.dto.request.SignInForm;
 import com.example.casestudyteam2.dto.request.SignUpForm;
 import com.example.casestudyteam2.dto.response.JwtResponse;
@@ -8,6 +10,7 @@ import com.example.casestudyteam2.model.Role;
 import com.example.casestudyteam2.model.RoleName;
 import com.example.casestudyteam2.model.Users;
 import com.example.casestudyteam2.security.jwt.JwtProvider;
+import com.example.casestudyteam2.security.jwt.JwtTokenFilter;
 import com.example.casestudyteam2.security.userpincal.UserPrinciple;
 import com.example.casestudyteam2.service.impl.RoleServiceImpl;
 import com.example.casestudyteam2.service.impl.UserServiceImpl;
@@ -18,9 +21,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,6 +44,8 @@ public class AuthController {
     AuthenticationManager authenticationManager;
     @Autowired
     JwtProvider jwtProvider;
+    @Autowired
+    JwtTokenFilter jwtTokenFilter;
     @PostMapping("/signup")
     public ResponseEntity<?> register(@Valid @RequestBody SignUpForm signUpForm){
         if(userService.existsByUsername(signUpForm.getUsername())){
@@ -82,4 +89,51 @@ public class AuthController {
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
     }
+    @PutMapping("/change-profile")
+    public ResponseEntity<?> changeProfile(HttpServletRequest request, @Valid @RequestBody ChangeProfileForm changeProfileForm){
+        String jwt = jwtTokenFilter.getJwt(request);
+        String username = jwtProvider.getUserNameFromToken(jwt);
+        Users users;
+        try {
+            if(userService.existsByUsername(changeProfileForm.getUsername())){
+                return new ResponseEntity<>(new ResponseMessage("no_user"), HttpStatus.OK);
+            }
+            if(userService.existsByEmail(changeProfileForm.getEmail())){
+                return new ResponseEntity<>(new ResponseMessage("no_email"), HttpStatus.OK);
+            }
+            users = userService.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("User Not Found with -> useranme"+username));
+            users.setName(changeProfileForm.getName());
+            users.setUsername(changeProfileForm.getUsername());
+            users.setEmail(changeProfileForm.getEmail());
+            users.setPhone(changeProfileForm.getPhone());
+            users.setBirthday(changeProfileForm.getBirthday());
+
+            userService.save(users);
+            return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+        } catch (UsernameNotFoundException exception){
+            return new ResponseEntity<>(new ResponseMessage(exception.getMessage()),HttpStatus.NOT_FOUND );
+        }
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(HttpServletRequest request, @Valid @RequestBody ChangePasswordForm changePasswordForm){
+        String jwt = jwtTokenFilter.getJwt(request);
+        String username = jwtProvider.getUserNameFromToken(jwt);
+        Users users;
+        try{
+            users = userService.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("User not found with -> username"+username));
+            boolean matches= passwordEncoder.matches(changePasswordForm.getCurrentPassword(),users.getPassword());
+            if(changePasswordForm.getNewPassword()!=null){
+                users.setPassword(passwordEncoder.encode(changePasswordForm.getNewPassword()));
+                userService.save(users);
+            } else{
+                return new ResponseEntity<>(new ResponseMessage("No"),HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new ResponseMessage("yes"),HttpStatus.OK);
+        }catch (UsernameNotFoundException exception){
+            return new ResponseEntity<>(new ResponseMessage(exception.getMessage()),HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 }
