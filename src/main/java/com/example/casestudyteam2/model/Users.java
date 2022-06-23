@@ -65,7 +65,7 @@ public class Users {
                  @Email String email,
                  @Size(min = 6,max = 100)String encode,
                  String phone,
-                 @DateTimeFormat(pattern = "yyyy/MM/dd")
+                 @DateTimeFormat(pattern = "yyyy-MM-dd")
                  Date birthday,
                  String avatar) {
         this.name = name;
