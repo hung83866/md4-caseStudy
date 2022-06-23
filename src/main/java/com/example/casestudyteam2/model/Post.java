@@ -13,10 +13,10 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPost;
 
-    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
+//    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
     private String content;
 
-    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
+//    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
     private String status;
 
     private String imageUrl;
@@ -26,9 +26,7 @@ public class Post {
     @ManyToOne
     private Users userPost;
 
-    @OneToMany(targetEntity = LikePost.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_fkl")
-    private Set<LikePost> likes;
+    private int likes;
 
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_fk")
@@ -37,7 +35,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long idPost, String content, String status, String imageUrl, String imageFile, Users userPost, Set<LikePost> likes, Set<Comment> comments) {
+    public Post(Long idPost, String content, String status, String imageUrl, String imageFile, Users userPost, int likes, Set<Comment> comments) {
         this.idPost = idPost;
         this.content = content;
         this.status = status;
@@ -96,11 +94,11 @@ public class Post {
         this.userPost = userPost;
     }
 
-    public Set<LikePost> getLikes() {
+    public int getLikes() {
         return likes;
     }
 
-    public void setLikes(Set<LikePost> likes) {
+    public void setLikes(int likes) {
         this.likes = likes;
     }
 
