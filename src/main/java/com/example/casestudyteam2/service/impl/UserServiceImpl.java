@@ -31,4 +31,14 @@ public class UserServiceImpl implements IUserService {
     public Users save(Users users) {
         return userRepository.save(users);
     }
+
+    @Override
+    public boolean checkLogin(Users users) {
+        for (Users users1: userRepository.findAll()) {
+            if (users1.getPassword().equals(users.getPassword())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

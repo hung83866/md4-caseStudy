@@ -9,4 +9,5 @@ public interface IUserService {
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
     Users save(Users users);
+    boolean checkLogin(Users users);
 }

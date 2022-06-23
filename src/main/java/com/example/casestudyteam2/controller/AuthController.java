@@ -80,6 +80,11 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+        Users currentUser = userService.findByUsername(userPrinciple.getUsername()).get();
+        if (userService.checkLogin(currentUser)){
+            return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+        }else
+            return new ResponseEntity<>(new ResponseMessage("Error 404"), HttpStatus.NOT_FOUND);
+
     }
 }
