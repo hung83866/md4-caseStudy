@@ -1,9 +1,6 @@
 package com.example.casestudyteam2.model;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import java.util.Set;
 
 @Entity
@@ -13,36 +10,33 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPost;
 
-    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
+//    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
     private String content;
 
-    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
+//    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
     private String status;
 
-    private String imageUrl;
+    private String video;
 
-    @Transient
-    private MultipartFile imageFile;
+    private String imageFile;
 
     @ManyToOne
     private Users userPost;
 
-    @OneToMany(targetEntity = LikePost.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_fkl")
-    private Set<LikePost> likes;
+    private int likes = 0;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_fk")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "post_comment", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private Set<Comment> comments;
 
     public Post() {
     }
 
-    public Post(Long idPost, String content, String status, String imageUrl, MultipartFile imageFile, Users userPost, Set<LikePost> likes, Set<Comment> comments) {
+    public Post(Long idPost, String content, String status, String imageUrl, String imageFile, Users userPost, int likes, Set<Comment> comments) {
         this.idPost = idPost;
         this.content = content;
         this.status = status;
-        this.imageUrl = imageUrl;
+        this.video = imageUrl;
         this.imageFile = imageFile;
         this.userPost = userPost;
         this.likes = likes;
@@ -73,19 +67,19 @@ public class Post {
         this.status = status;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getVideo() {
+        return video;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setVideo(String imageUrl) {
+        this.video = imageUrl;
     }
 
-    public MultipartFile getImageFile() {
+    public String getImageFile() {
         return imageFile;
     }
 
-    public void setImageFile(MultipartFile imageFile) {
+    public void setImageFile(String imageFile) {
         this.imageFile = imageFile;
     }
 
@@ -97,11 +91,11 @@ public class Post {
         this.userPost = userPost;
     }
 
-    public Set<LikePost> getLikes() {
+    public int getLikes() {
         return likes;
     }
 
-    public void setLikes(Set<LikePost> likes) {
+    public void setLikes(int likes) {
         this.likes = likes;
     }
 
