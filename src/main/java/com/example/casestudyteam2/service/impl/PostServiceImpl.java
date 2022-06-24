@@ -1,6 +1,7 @@
 package com.example.casestudyteam2.service.impl;
 
 import com.example.casestudyteam2.model.Post;
+import com.example.casestudyteam2.model.Users;
 import com.example.casestudyteam2.repository.IPostRepository;
 import com.example.casestudyteam2.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,10 @@ public class PostServiceImpl implements IPostService {
     @Override
     public Iterable<Post> findAllByContentContaining(String content) {
         return postRepository.findAllByContentContaining(content);
+    }
+
+    @Override
+    public Iterable<Post> findAllByUserPost(Users users) {
+        return postRepository.findAllByUserPost(users);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.casestudyteam2.service;
 
 import com.example.casestudyteam2.model.Post;
+import com.example.casestudyteam2.model.Users;
 
 import java.util.Optional;
 
@@ -14,6 +15,8 @@ public interface IPostService {
     void remove(Long id);
 
     Iterable<Post> findAllByContentContaining(String content);
+
+    Iterable<Post> findAllByUserPost(Users users);
 
 //    Iterable<Post> findAllByUserPostIdUser(Long id);
 //
