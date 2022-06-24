@@ -45,4 +45,9 @@ public class UserController {
         user.setEnabled(false);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Users> findByUser(@PathVariable("id") Long id) {
+        Users user = userService.findById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 }
