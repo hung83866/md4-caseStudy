@@ -15,28 +15,31 @@ import java.util.Optional;
 public class PostController {
     @Autowired
     private IPostService postService;
+    @Autowired
+    private IUserService userService;
 
     @GetMapping()
-    public ResponseEntity<Iterable<Post>> findAllPost(){
+    public ResponseEntity<Iterable<Post>> findAllPost() {
         Iterable<Post> posts = postService.findAll();
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
-    @PostMapping()
-    public ResponseEntity<Post> savePost(@RequestBody Post post){
+    @PostMapping("/{iduser}")
+    public ResponseEntity<Post> savePost(@RequestBody Post post, @PathVariable Long iduser) {
+        post.setUserPost(userService.findById(iduser));
         postService.save(post);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Post> deletePost(@PathVariable Long id){
+    public ResponseEntity<Post> deletePost(@PathVariable Long id) {
         Optional<Post> post = postService.findById(id);
         postService.remove(post.get().getIdPost());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> editPost(@PathVariable Long id, @RequestBody Post post){
+    public ResponseEntity<Post> editPost(@PathVariable Long id, @RequestBody Post post) {
         Optional<Post> postOptional = postService.findById(id);
         post.setIdPost(postOptional.get().getIdPost());
         postService.save(post);
@@ -44,7 +47,7 @@ public class PostController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Iterable<Post>> findByContent(@RequestParam String content){
+    public ResponseEntity<Iterable<Post>> findByContent(@RequestParam String content) {
         Iterable<Post> posts = postService.findAllByContentContaining(content);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
