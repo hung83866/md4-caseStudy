@@ -80,7 +80,8 @@ public class Users {
                  String phone,
                  @DateTimeFormat(pattern = "yyyy-MM-dd")
                  Date birthday,
-                 String avatar) {
+                 String avatar,
+                 String image) {
         this.name = name;
         this.username = username;
         this.email = email;
@@ -89,6 +90,8 @@ public class Users {
         this.enabled=true;
         this.birthday= birthday;
         this.avatar = avatar;
+        this.image = image;
+
     }
 
 

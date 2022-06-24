@@ -55,7 +55,7 @@ public class AuthController {
             signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/chinhbeo-18d3b.appspot.com/o/avatar.png?alt=media&token=3511cf81-8df2-4483-82a8-17becfd03211");
             signUpForm.setImage("https://firebasestorage.googleapis.com/v0/b/hoanghungmanh1.appspot.com/o/images%2Fanh-bia-chat.png?alt=media&token=e3ee6484-bba6-4045-a058-3a72cd9c3188");
         }
-        Users users = new Users(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()), signUpForm.getPhone(),signUpForm.getBirthday(),signUpForm.getAvatar());
+        Users users = new Users(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()), signUpForm.getPhone(),signUpForm.getBirthday(),signUpForm.getAvatar(),signUpForm.getImage());
         Set<String> strRoles = signUpForm.getRoles();
         Set<Role> roles = new HashSet<>();
         strRoles.forEach(role ->{
