@@ -1,9 +1,6 @@
 package com.example.casestudyteam2.controller;
 
-import com.example.casestudyteam2.dto.request.ChangePasswordForm;
-import com.example.casestudyteam2.dto.request.ChangeProfileForm;
-import com.example.casestudyteam2.dto.request.SignInForm;
-import com.example.casestudyteam2.dto.request.SignUpForm;
+import com.example.casestudyteam2.dto.request.*;
 import com.example.casestudyteam2.dto.response.JwtResponse;
 import com.example.casestudyteam2.dto.response.ResponseMessage;
 import com.example.casestudyteam2.model.Role;
@@ -135,5 +132,12 @@ public class AuthController {
         }
     }
 
+    @PutMapping("/change-avatar")
+    public ResponseEntity<?> ChangeAvatar(HttpServletRequest request, @Valid @RequestBody ChangeAvatarForm changeAvatarForm){
+        String jwt = jwtTokenFilter.getJwt(request);
+        String username = jwtProvider.getUserNameFromToken(jwt);
+        Users users;
 
+        return null;
+    }
 }
