@@ -29,6 +29,15 @@ public class Post {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "post_comment", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private Set<Comment> comments;
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public Post() {
     }
