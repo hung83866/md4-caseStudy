@@ -10,26 +10,19 @@ public class JwtResponse {
     private String type = "Bearer";
     private String name;
     private String avatar;
+    private String image;
     private Collection<? extends GrantedAuthority> roles;
 
     public JwtResponse() {
     }
 
 
-
-    public JwtResponse(String token, String name,String avatar, Collection<? extends GrantedAuthority> authorities) {
-
-        this.token = token;
-        this.name = name;
-        this.avatar = avatar;
-        this.roles = authorities;
-    }
-
-    public JwtResponse(Long id, String token, String name, String avatar, Collection<? extends GrantedAuthority> authorities) {
+    public JwtResponse(Long id, String token, String name, String avatar,String image, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.token = token;
         this.name = name;
         this.avatar = avatar;
+        this.image = image;
         this.roles = authorities;
     }
 
@@ -79,5 +72,13 @@ public class JwtResponse {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -11,6 +11,7 @@ public class SignUpForm {
     private String phone;
     private Date birthday;
     private String avatar;
+    private String image;
     private Set<String> roles;
 
     public SignUpForm() {
@@ -89,5 +90,13 @@ public class SignUpForm {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

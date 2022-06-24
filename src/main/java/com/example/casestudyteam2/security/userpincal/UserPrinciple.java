@@ -21,6 +21,7 @@ public class UserPrinciple implements UserDetails {
     private String phone;
     private Date birthday;
     private String avatar;
+    private String image;
     private Collection<? extends GrantedAuthority> roles;
 
     @Override
@@ -31,13 +32,14 @@ public class UserPrinciple implements UserDetails {
     public UserPrinciple(Long id, String name, String username, String email, String password, String phone, String birthday, String avatar, List<GrantedAuthority> authorities) {
     }
 
-    public UserPrinciple(Long id, String name, String username, String email, String password,String phone,Date birthday, String avatar, Collection<? extends GrantedAuthority> roles) {
+    public UserPrinciple(Long id, String name, String username, String email, String password,String phone,Date birthday, String avatar,String image, Collection<? extends GrantedAuthority> roles) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
         this.avatar = avatar;
+        this.image = image;
         this.phone= phone;
         this.birthday= birthday;
         this.roles = roles;
@@ -54,6 +56,7 @@ public class UserPrinciple implements UserDetails {
                 users.getPhone(),
                 users.getBirthday(),
                 users.getAvatar(),
+                users.getImage(),
                 authorities
         );
     }
@@ -61,6 +64,10 @@ public class UserPrinciple implements UserDetails {
     public String getAvatar() {
         return avatar;
     }
+    public String getImage() {
+        return image;
+    }
+
 
     public String getName() {
         return name;

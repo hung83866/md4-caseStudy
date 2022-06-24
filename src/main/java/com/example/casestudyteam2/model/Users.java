@@ -39,6 +39,8 @@ public class Users {
     private Date birthday;
     @Lob
     private String avatar;
+    @Lob
+    private String image;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles = new HashSet<>();
@@ -56,7 +58,7 @@ public class Users {
 
     }
 
-    public Users(Long id, String name, String username, String email, String password, String phone, Date birthday, String avatar, Set<Role> roles) {
+    public Users(Long id, String name, String username, String email, String password, String phone, Date birthday, String avatar,String image, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -66,6 +68,7 @@ public class Users {
         this.phone = phone;
         this.birthday = birthday;
         this.avatar = avatar;
+        this.image = image;
         this.roles = roles;
     }
 
@@ -162,4 +165,11 @@ public class Users {
         this.roles = roles;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }
