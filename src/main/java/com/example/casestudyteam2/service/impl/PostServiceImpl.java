@@ -37,4 +37,5 @@ public class PostServiceImpl implements IPostService {
     public Iterable<Post> findAllByContentContaining(String content) {
         return postRepository.findAllByContentContaining(content);
     }
+
 }

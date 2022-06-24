@@ -21,6 +21,7 @@ public class Post {
     private String imageFile;
 
     @ManyToOne
+    @JoinColumn(name = "users")
     private Users userPost;
 
     private int likes = 0;

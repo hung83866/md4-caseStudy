@@ -15,6 +15,8 @@ public interface IPostService {
 
     Iterable<Post> findAllByContentContaining(String content);
 
+
+
 //    Iterable<Post> findAllByUserPostIdUser(Long id);
 //
 //    Iterable<Post> findAllByContentContaining(String hashtag);
