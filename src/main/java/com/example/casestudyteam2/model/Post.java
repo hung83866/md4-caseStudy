@@ -23,7 +23,7 @@ public class Post {
     @ManyToOne
     private Users userPost;
 
-    private int likes;
+    private int likes = 0;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "post_comment", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
