@@ -62,6 +62,7 @@ public class Users {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.enabled=true;
         this.phone = phone;
         this.birthday = birthday;
         this.avatar = avatar;
@@ -82,6 +83,7 @@ public class Users {
         this.email = email;
         this.password = encode;
         this.phone= phone;
+        this.enabled=true;
         this.birthday= birthday;
         this.avatar = avatar;
     }

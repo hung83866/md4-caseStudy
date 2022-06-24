@@ -82,7 +82,7 @@ public class AuthController {
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         Users currentUser = userService.findByUsername(userPrinciple.getUsername()).get();
         if (userService.checkLogin(currentUser)){
-            return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+            return ResponseEntity.ok(new JwtResponse(currentUser.getId(),token, userPrinciple.getName(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
         }else
             return new ResponseEntity<>(new ResponseMessage("Error 404"), HttpStatus.NOT_FOUND);
 

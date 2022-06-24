@@ -1,9 +1,6 @@
 package com.example.casestudyteam2.model;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import java.util.Set;
 
 @Entity
@@ -19,7 +16,7 @@ public class Post {
 //    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
     private String status;
 
-    private String imageUrl;
+    private String video;
 
     private String imageFile;
 
@@ -28,8 +25,8 @@ public class Post {
 
     private int likes;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_fk")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "post_comment", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private Set<Comment> comments;
 
     public Post() {
@@ -39,7 +36,7 @@ public class Post {
         this.idPost = idPost;
         this.content = content;
         this.status = status;
-        this.imageUrl = imageUrl;
+        this.video = imageUrl;
         this.imageFile = imageFile;
         this.userPost = userPost;
         this.likes = likes;
@@ -70,12 +67,12 @@ public class Post {
         this.status = status;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getVideo() {
+        return video;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setVideo(String imageUrl) {
+        this.video = imageUrl;
     }
 
     public String getImageFile() {
