@@ -2,6 +2,7 @@ package com.example.casestudyteam2.controller;
 
 import com.example.casestudyteam2.model.Post;
 import com.example.casestudyteam2.service.IPostService;
+import com.example.casestudyteam2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
