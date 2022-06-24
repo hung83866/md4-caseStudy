@@ -1,10 +1,7 @@
 package com.example.casestudyteam2.controller;
 
 import com.example.casestudyteam2.model.Post;
-import com.example.casestudyteam2.model.Users;
-import com.example.casestudyteam2.repository.IUserRepository;
 import com.example.casestudyteam2.service.IPostService;
-import com.example.casestudyteam2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +47,11 @@ public class PostController {
     public ResponseEntity<Iterable<Post>> findByContent(@RequestParam String content){
         Iterable<Post> posts = postService.findAllByContentContaining(content);
         return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> findById(@PathVariable Long id){
+        Optional<Post> postOptional = postService.findById(id);
+        return new ResponseEntity<>(postOptional.get(),HttpStatus.OK);
     }
 }
