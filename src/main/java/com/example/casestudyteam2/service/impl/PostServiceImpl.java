@@ -20,7 +20,10 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public Optional<Post> findById(Long id) {
-        return postRepository.findById(id);
+        if (postRepository.findById(id).isPresent()){
+            return Optional.of(postRepository.findById(id).get());
+        }
+        return null;
     }
 
     @Override

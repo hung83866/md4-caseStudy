@@ -33,4 +33,12 @@ public class UserController {
         user.setEnabled(false);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @GetMapping("/enable/{id}")
+    public ResponseEntity<Users> enableUser(@PathVariable("id") Long id) {
+        Users user = userService.findById(id);
+        user.setEnabled(true);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
 }
