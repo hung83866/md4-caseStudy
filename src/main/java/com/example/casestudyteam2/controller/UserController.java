@@ -1,5 +1,6 @@
 package com.example.casestudyteam2.controller;
 
+import com.example.casestudyteam2.dto.request.ChangeAvatarForm;
 import com.example.casestudyteam2.model.Post;
 import com.example.casestudyteam2.model.Users;
 import com.example.casestudyteam2.service.IPostService;
@@ -50,5 +51,28 @@ public class UserController {
     public ResponseEntity<Users> findByUser(@PathVariable("id") Long id) {
         Users user = userService.findById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+// Update user
+    @PutMapping("/{id}")
+    public ResponseEntity<Users> updateUser(@RequestBody Users users,@PathVariable("id") Long id) {
+        Users userOptional = userService.findById(id);
+        users.setId(userOptional.getId());
+        users.setAvatar(userOptional.getAvatar());
+        users.setImage(userOptional.getImage());
+        users.setUsername(userOptional.getUsername());
+        users.setPassword(userOptional.getPassword());
+        userService.save(users);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+// Update Avatar
+    @PutMapping("/avatar/{id}")
+    public ResponseEntity<Users> updateAvatar(@RequestBody ChangeAvatarForm changeAvatarForm, @PathVariable("id") Long id) {
+        Users userOptional = userService.findById(id);
+        Users users = new Users(userOptional.getId(),userOptional.getName(),userOptional.getUsername(),userOptional.getEmail(),
+                userOptional.getPassword(),userOptional.getPhone(),userOptional.getBirthday(),changeAvatarForm.getAvatar(),
+                userOptional.getImage(),userOptional.getAddress(),userOptional.getInterests(),userOptional.getRoles(),userOptional.getSex());
+        userService.save(users);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

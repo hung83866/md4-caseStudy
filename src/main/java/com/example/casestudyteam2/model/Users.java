@@ -35,12 +35,50 @@ public class Users {
     private String password;
     private String phone;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date birthday;
     @Lob
     private String avatar;
     @Lob
     private String image;
+    private String address;
+    private String sex;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getInterests() {
+        return interests;
+    }
+
+    public void setInterests(String interests) {
+        this.interests = interests;
+    }
+
+    private String interests;
+
+    public Users(Long id, String name, String username, String email, String password, String phone, Date birthday, String avatar, String image, String address, String interests, Set<Role> roles,String sex) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.birthday = birthday;
+        this.avatar = avatar;
+        this.image = image;
+        this.address = address;
+        this.interests = interests;
+        this.roles = roles;
+        this.enabled = true;
+        this.sex = sex;
+    }
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles = new HashSet<>();
@@ -106,6 +144,14 @@ public class Users {
 
     public String getName() {
         return name;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public void setName(String name) {
