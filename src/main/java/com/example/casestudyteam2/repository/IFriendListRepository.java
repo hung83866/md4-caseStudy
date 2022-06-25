@@ -18,7 +18,7 @@ public interface IFriendListRepository extends JpaRepository<FriendList, Long> {
 
     void deleteByUserFrom_IdAndUserTo_Id(Long idUserFrom, Long idUSerTo);
 
-    @Query(value = "select * from friend_list where status = 'friend' and (user_from_id_user =:idUser or user_to_id_user = :idUser)", nativeQuery = true)
+    @Query(value = "select * from friend_list where status = 'friend' and (user_from_id =:idUser or user_to_id = :idUser)", nativeQuery = true)
     Iterable<FriendList> findFriendListByIdUser(@Param("idUser") Long idUser);
 
 
@@ -26,11 +26,10 @@ public interface IFriendListRepository extends JpaRepository<FriendList, Long> {
     @Query(value = "UPDATE friend_list SET status = 'friend' WHERE user_from_id = :userFromId AND user_to_id = :userToId", nativeQuery = true)
     void acceptFriendRequest(@Param("userFromId") Long userFromId, @Param("userToId") Long userToId);
 
-    @Modifying
     @Query(value = "UPDATE friend_list SET status = 'block' WHERE user_from_id = :idUserFrom AND user_to_id = :idUserTo", nativeQuery = true)
     void blockFriendRequest(@Param("idUserFrom") Long idUserFrom, @Param("idUserTo") Long idUserTo);
 
-    @Query(value = "select status from friend_list where user_from_id =:idUserFrom and user_to_id = :idUserTo", nativeQuery = true)
+    @Query(value = "select status from friend_list where user_from_id =:idUserFrom AND user_to_id = :idUserTo", nativeQuery = true)
     String checkFriendsStatus(@Param("idUserFrom") Long idUserFrom, @Param("idUserTo") Long idUserTo);
 
     @Query(value = "select * from friend_list where user_to_id_user = :idUser and status = 'pending'", nativeQuery = true)
@@ -39,7 +38,4 @@ public interface IFriendListRepository extends JpaRepository<FriendList, Long> {
     @Modifying
     @Query(value = "INSERT INTO friend_list (status, user_from_id, user_to_id) VALUES ('pending', :idUserFrom, :idUserTo)", nativeQuery = true)
     void addFriend(@Param("idUserFrom") Long idUserFrom, @Param("idUserTo") Long idUserTo);
-
-
-
 }
