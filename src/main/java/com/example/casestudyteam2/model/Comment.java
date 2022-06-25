@@ -10,15 +10,23 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idComment;
-//    @Min(value = 0 , message = "Value should be greater then then equal to 4")
-    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
+//    @Min(value = 0 , message = "Value should be greater than or equal to 4")
+    @Max(value = 1000 , message = "Value should be less than or equal to 1000")
     private String content;
 
     @ManyToOne
     private Users user;
 
+    int likes = 0;
+
     public Comment() {
     }
+
+    public Comment(String content, Users user) {
+        this.content = content;
+        this.user = user;
+    }
+
 
     public Comment(Long idComment, String content, Users user) {
         this.idComment = idComment;
@@ -49,4 +57,5 @@ public class Comment {
     public void setUser(Users user) {
         this.user = user;
     }
+
 }

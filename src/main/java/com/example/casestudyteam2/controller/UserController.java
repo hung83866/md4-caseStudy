@@ -46,6 +46,14 @@ public class UserController {
         user.setEnabled(false);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+//mơ lại tk
+    @GetMapping("/enable/{id}")
+    public ResponseEntity<Users> enableUser(@PathVariable("id") Long id) {
+        Users user = userService.findById(id);
+        user.setEnabled(true);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
 // tìm user theo id
     @GetMapping("/{id}")
     public ResponseEntity<Users> findByUser(@PathVariable("id") Long id) {

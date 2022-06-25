@@ -2,35 +2,43 @@ package com.example.casestudyteam2.model;
 
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Table(name = "likePost")
 public class LikePost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idLike;
+    private Long likePostId;
 
     @ManyToOne
+    @JoinColumn(name="postID")
     private Post post;
 
     @ManyToOne
+    @JoinColumn(name="userID")
     private Users users;
 
-    public LikePost() {
+    public LikePost(Optional<Post> post, Users users) {
     }
 
-    public LikePost(Long idLike, Post post, Users users) {
-        this.idLike = idLike;
+    public LikePost(Long likePostId, Post post, Users users) {
+        this.likePostId = likePostId;
         this.post = post;
         this.users = users;
     }
 
-    public Long getIdLike() {
-        return idLike;
+    public Long getLikePostId() {
+        return likePostId;
     }
 
-    public void setIdLike(Long idLike) {
-        this.idLike = idLike;
+    public LikePost(Post post, Users users) {
+        this.post = post;
+        this.users = users;
+    }
+
+    public void setLikePostId(Long likePostId) {
+        this.likePostId = likePostId;
     }
 
     public Post getPost() {
