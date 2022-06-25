@@ -22,14 +22,14 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
-
+//tìm post theo người viết
     @GetMapping("/view/{idUser}")
     public ResponseEntity<Iterable<Post>> findAllPostByUser(@PathVariable Long idUser){
         Optional<Users> usersOptional = Optional.ofNullable(userService.findById(idUser));
         Iterable<Post> posts = postService.findAllByUserPost(usersOptional.get());
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
-
+//List User
     @GetMapping("/list")
     public ResponseEntity<Iterable<Users>> showAllUsers() {
         List<Users> users = userService.findAll();
@@ -38,13 +38,14 @@ public class UserController {
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-
+//vo hiệu hóa tk
     @GetMapping("/disable/{id}")
     public ResponseEntity<Users> disableUser(@PathVariable("id") Long id) {
         Users user = userService.findById(id);
         user.setEnabled(false);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+// tìm user theo id
     @GetMapping("/{id}")
     public ResponseEntity<Users> findByUser(@PathVariable("id") Long id) {
         Users user = userService.findById(id);

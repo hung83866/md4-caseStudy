@@ -21,13 +21,13 @@ public class PostController {
     private IPostService postService;
     @Autowired
     private IUserService userService;
-
+//list post
     @GetMapping()
     public ResponseEntity<Iterable<Post>> findAllPost() {
         Iterable<Post> posts = postService.findAll();
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
-
+//post bài viết mời theo idUser
     @PostMapping("/{iduser}")
     public ResponseEntity<Post> savePost(@RequestBody Post post, @PathVariable Long iduser) {
         post.setUserPost(userService.findById(iduser));
@@ -35,28 +35,34 @@ public class PostController {
         postService.save(post);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+//xóa bài viết theo id Post
     @DeleteMapping("/{id}")
     public ResponseEntity<Post> deletePost(@PathVariable Long id) {
         Optional<Post> post = postService.findById(id);
         postService.remove(post.get().getIdPost());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+//Sửa bài viết theo idPost
     @PutMapping("/{id}")
     public ResponseEntity<Post> editPost(@PathVariable Long id, @RequestBody Post post) {
         Optional<Post> postOptional = postService.findById(id);
         post.setIdPost(postOptional.get().getIdPost());
+        post.setUserPost(postOptional.get().getUserPost());
+        post.setTime(new Date()+"");
+        post.setVideo("đã chỉnh sửa!");
+        if (post.getImageFile().equals("")){
+            post.setImageFile(postOptional.get().getImageFile());
+        }
         postService.save(post);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+//tìm kiếm gần đúng theo content Post
     @GetMapping("/search")
     public ResponseEntity<Iterable<Post>> findByContent(@RequestParam String content) {
         Iterable<Post> posts = postService.findAllByContentContaining(content);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
-
+//Tìm kiếm post theo id
     @GetMapping("/{id}")
     public ResponseEntity<Post> findById(@PathVariable Long id){
         Optional<Post> postOptional = postService.findById(id);

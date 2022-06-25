@@ -43,6 +43,8 @@ public class AuthController {
     JwtProvider jwtProvider;
     @Autowired
     JwtTokenFilter jwtTokenFilter;
+
+//đăng kí tài khoản
     @PostMapping("/signup")
     public ResponseEntity<?> register(@Valid @RequestBody SignUpForm signUpForm){
         if(userService.existsByUsername(signUpForm.getUsername())){
@@ -77,6 +79,7 @@ public class AuthController {
         userService.save(users);
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
     }
+//Đăng nhập User
     @PostMapping("/signin")
     public ResponseEntity<?> login(@Valid @RequestBody SignInForm signInForm){
         Authentication authentication = authenticationManager.authenticate(
@@ -92,6 +95,7 @@ public class AuthController {
             return new ResponseEntity<>(new ResponseMessage("Error 404"), HttpStatus.NOT_FOUND);
 
     }
+// thay đổi profile
     @PutMapping("/change-profile")
     public ResponseEntity<?> changeProfile(HttpServletRequest request, @Valid @RequestBody ChangeProfileForm changeProfileForm){
         String jwt = jwtTokenFilter.getJwt(request);
@@ -118,6 +122,7 @@ public class AuthController {
         }
     }
 
+ // thay đổi mk
     @PutMapping("/change-password")
     public ResponseEntity<?> changePassword(HttpServletRequest request, @Valid @RequestBody ChangePasswordForm changePasswordForm){
         String jwt = jwtTokenFilter.getJwt(request);
@@ -137,7 +142,7 @@ public class AuthController {
             return new ResponseEntity<>(new ResponseMessage(exception.getMessage()),HttpStatus.NOT_FOUND);
         }
     }
-
+//thay dổi avatar
     @PutMapping("/change-avatar")
     public ResponseEntity<?> ChangeAvatar(HttpServletRequest request, @Valid @RequestBody ChangeAvatarForm changeAvatarForm){
         String jwt = jwtTokenFilter.getJwt(request);
