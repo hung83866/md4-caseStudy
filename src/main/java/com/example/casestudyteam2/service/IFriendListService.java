@@ -25,7 +25,7 @@ public interface IFriendListService {
 
     Iterable<FriendList> findAllPendingByIdUser(Long idUser);
 
-//    void deleteByUserFrom_IdUserAndUserTo_IdUser(Long idUserFrom, Long idUserTo);
+    void deleteByUserFrom_IdAndUserTo_Id(Long idUserFrom, Long idUserTo);
 
     void addFriend(Long idUserFrom, Long idUserTo);
 }

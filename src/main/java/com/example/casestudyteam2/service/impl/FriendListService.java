@@ -122,14 +122,14 @@ public class FriendListService implements IFriendListService {
         return friendListRepository.findAllPendingByIdUser(idUser);
     }
 
-//    @Override
-//    public void deleteByUserFrom_IdUserAndUserTo_IdUser(Long idUserFrom, Long idUserTo) {
-//        if (checkFriendStatus(idUserFrom, idUserTo)==null){
-//            friendListRepository.deleteByUserFrom_IdUserAndUserTo_IdUser(idUserTo, idUserFrom);
-//        }else {
-//            friendListRepository.deleteByUserFrom_IdUserAndUserTo_IdUser(idUserFrom, idUserTo);
-//        }
-//    }
+    @Override
+    public void deleteByUserFrom_IdAndUserTo_Id(Long idUserFrom, Long idUserTo) {
+        if (checkFriendStatus(idUserFrom, idUserTo)==null){
+            friendListRepository.deleteByUserFrom_IdAndUserTo_Id(idUserTo, idUserFrom);
+        }else {
+            friendListRepository.deleteByUserFrom_IdAndUserTo_Id(idUserFrom, idUserTo);
+        }
+    }
 
     @Override
     public void addFriend(Long idUserFrom, Long idUserTo) {

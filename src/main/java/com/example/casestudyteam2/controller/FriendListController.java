@@ -54,11 +54,11 @@ public class FriendListController {
         return new ResponseEntity<>(status, HttpStatus.OK);
     }
 
-//    @GetMapping("/{idUserFrom}/{idUserTo}/deleteFriendStatus")
-//    public ResponseEntity<String> unFriend(@PathVariable("idUserFrom")Long idUserFrom, @PathVariable("idUserTo")Long idUserTo){
-//        friendListService.deleteByUserFrom_IdUserAndUserTo_IdUser(idUserFrom, idUserTo);
-//        return new ResponseEntity<>("success", HttpStatus.OK);
-//    }
+    @GetMapping("/{idUserFrom}/{idUserTo}/deleteFriendStatus")
+    public ResponseEntity<String> unFriend(@PathVariable("idUserFrom")Long idUserFrom, @PathVariable("idUserTo")Long idUserTo){
+        friendListService.deleteByUserFrom_IdAndUserTo_Id(idUserFrom, idUserTo);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
 
     @GetMapping("/{idUserFrom}/{idUserTo}/blockFriend")
     public ResponseEntity<String> blockFriend(@PathVariable("idUserFrom")Long idUserFrom,@PathVariable("idUserTo")Long idUserTo){
