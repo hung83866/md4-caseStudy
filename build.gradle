@@ -31,9 +31,22 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.4.3'
 
+
+    // https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2
+//    implementation group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.4.0.RELEASE'
+//    implementation group: 'org.springframework.social', name: 'spring-social-core', version: '1.1.4.RELEASE'
+//    implementation group: 'org.springframework.social', name: 'spring-social-config', version: '1.1.4.RELEASE'
+//    implementation group: 'org.springframework.social', name: 'spring-social-security', version: '1.1.4.RELEASE'
+//    implementation group: 'org.springframework.social', name: 'spring-social-google', version: '1.0.0.RELEASE'
+
     //JWT
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
+
+
+    // https://mvnrepository.com/artifact/org.webjars/stomp-websocket
+    implementation group: 'org.webjars', name: 'stomp-websocket', version: '2.3.3'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 tasks.named('test') {

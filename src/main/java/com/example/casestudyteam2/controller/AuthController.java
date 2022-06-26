@@ -142,7 +142,17 @@ public class AuthController {
         String jwt = jwtTokenFilter.getJwt(request);
         String username = jwtProvider.getUserNameFromToken(jwt);
         Users users;
-
-        return null;
+        try {
+            if(changeAvatarForm.getAvatar()==null){
+                return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
+            } else {
+                users = userService.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("User Not Found -> username"+username));
+                users.setAvatar(changeAvatarForm.getAvatar());
+                userService.save(users);
+            }
+            return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+        } catch (UsernameNotFoundException exception){
+            return new ResponseEntity<>(new ResponseMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
+        }
     }
 }
