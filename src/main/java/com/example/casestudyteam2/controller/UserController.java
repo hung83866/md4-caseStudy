@@ -83,4 +83,17 @@ public class UserController {
         userService.save(users);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+// Update ảnh bìa
+    @PutMapping("/image/{id}")
+    public ResponseEntity<Users> updateImage(@RequestBody ChangeAvatarForm changeAvatarForm, @PathVariable("id") Long id) {
+        Users userOptional = userService.findById(id);
+        Users users = new Users(userOptional.getId(),userOptional.getName(),userOptional.getUsername(),userOptional.getEmail(),
+                userOptional.getPassword(),userOptional.getPhone(),userOptional.getBirthday(),userOptional.getAvatar(),
+                changeAvatarForm.getAvatar(),userOptional.getAddress(),userOptional.getInterests(),userOptional.getRoles(),userOptional.getSex());
+        userService.save(users);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }

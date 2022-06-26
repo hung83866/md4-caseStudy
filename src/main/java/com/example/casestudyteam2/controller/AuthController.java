@@ -151,4 +151,19 @@ public class AuthController {
 
         return null;
     }
+
+    // Update mat khau
+    @PutMapping("/change-password/{id}")
+    public ResponseEntity<?> updatePassword(@RequestBody ChangePasswordForm changePasswordForm, @PathVariable Long id){
+        Users userOptional = userService.findById(id);
+        if (!passwordEncoder.encode(changePasswordForm.getCurrentPassword()).equals(userOptional.getPassword())){
+            if (!passwordEncoder.encode(changePasswordForm.getCurrentPassword()).equals(changePasswordForm.getNewPassword())){
+                Users users = new Users(userOptional.getId(),userOptional.getName(),userOptional.getUsername(),userOptional.getEmail(),
+                        passwordEncoder.encode(changePasswordForm.getNewPassword()),userOptional.getPhone(),userOptional.getBirthday(),userOptional.getAvatar(),
+                        userOptional.getImage(),userOptional.getAddress(),userOptional.getInterests(),userOptional.getRoles(),userOptional.getSex());
+                userService.save(users);
+                return new ResponseEntity<>(new ResponseMessage("yes"),HttpStatus.OK);
+            }else return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
+        }else return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
+    }
 }
