@@ -56,4 +56,9 @@ public class UserServiceImpl implements IUserService {
         }
         return false;
     }
+
+    @Override
+    public List<Users> findByNameCon(String name) {
+        return userRepository.findByNameContaining(name);
+    }
 }

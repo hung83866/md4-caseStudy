@@ -25,13 +25,13 @@ public class CommentController {
     private IPostService postService;
     @Autowired
     private IUserService userService;
-
+// show comment
     @GetMapping()
     public ResponseEntity<Iterable<Comment>> showComment() {
         Iterable<Comment> comments = commentService.findAll();
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
-
+//add comment
     @PostMapping()
     public ResponseEntity<Comment> createNewComment(@RequestBody CommentForm commentForm) {
         Comment comment = new Comment();

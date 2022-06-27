@@ -13,4 +13,5 @@ public interface IUserService {
     Boolean existsByEmail(String email);
     Users save(Users users);
     boolean checkLogin(Users users);
+    List<Users> findByNameCon(String name);
 }

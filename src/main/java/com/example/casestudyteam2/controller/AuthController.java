@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @RequestMapping("/api/auth")
@@ -153,11 +154,14 @@ public class AuthController {
     }
 
     // Update mat khau
+
     @PutMapping("/change-password/{id}")
     public ResponseEntity<?> updatePassword(@RequestBody ChangePasswordForm changePasswordForm, @PathVariable Long id){
         Users userOptional = userService.findById(id);
-        if (!passwordEncoder.encode(changePasswordForm.getCurrentPassword()).equals(userOptional.getPassword())){
-            if (!passwordEncoder.encode(changePasswordForm.getCurrentPassword()).equals(changePasswordForm.getNewPassword())){
+        boolean matches= passwordEncoder.matches(changePasswordForm.getCurrentPassword(),userOptional.getPassword());
+        boolean matches1= passwordEncoder.matches(changePasswordForm.getCurrentPassword(),changePasswordForm.getNewPassword());
+        if (matches){
+            if (!matches1){
                 Users users = new Users(userOptional.getId(),userOptional.getName(),userOptional.getUsername(),userOptional.getEmail(),
                         passwordEncoder.encode(changePasswordForm.getNewPassword()),userOptional.getPhone(),userOptional.getBirthday(),userOptional.getAvatar(),
                         userOptional.getImage(),userOptional.getAddress(),userOptional.getInterests(),userOptional.getRoles(),userOptional.getSex());
@@ -165,5 +169,29 @@ public class AuthController {
                 return new ResponseEntity<>(new ResponseMessage("yes"),HttpStatus.OK);
             }else return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
         }else return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
+    }
+
+    @PutMapping("/forgot-password/{username}")
+    public ResponseEntity<?> forgotPassword(@RequestBody ChangeProfileForm changeProfileForm, @PathVariable String username){
+        Optional<Users> userOptional = userService.findByUsername(username);
+       if (username.equals(userOptional.get().getUsername())){
+           if (changeProfileForm.getEmail().equals(userOptional.get().getEmail())){
+               if (changeProfileForm.getPhone().equals(userOptional.get().getPhone())){
+                   return new ResponseEntity<>(new ResponseMessage("yes"),HttpStatus.OK);
+               }else return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
+           }else return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
+       }
+        return new ResponseEntity<>(new ResponseMessage("no"), HttpStatus.OK);
+    }
+
+
+    @PutMapping("/new-password")
+    public ResponseEntity<?> updatePassword(@RequestBody SignInForm signInForm){
+        Optional<Users> userOptional = userService.findByUsername(signInForm.getUsername());
+        Users users = new Users(userOptional.get().getId(),userOptional.get().getName(),userOptional.get().getUsername(),userOptional.get().getEmail(),
+                passwordEncoder.encode(signInForm.getPassword()),userOptional.get().getPhone(),userOptional.get().getBirthday(),userOptional.get().getAvatar(),
+                userOptional.get().getImage(),userOptional.get().getAddress(),userOptional.get().getInterests(),userOptional.get().getRoles(),userOptional.get().getSex());
+        userService.save(users);
+        return new ResponseEntity<>(new ResponseMessage("yes"),HttpStatus.OK);
     }
 }

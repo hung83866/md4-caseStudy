@@ -95,5 +95,14 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+//tim user theo name
+    @GetMapping("/search/{name}")
+    public ResponseEntity<Iterable<Users>> searchUsername(@PathVariable String name){
+        List<Users> users = userService.findByNameCon(name);
+        if (users.isEmpty()) {
+            new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 
 }
