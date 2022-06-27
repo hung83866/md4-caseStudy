@@ -1,6 +1,8 @@
 package com.example.casestudyteam2.controller;
 
+import com.example.casestudyteam2.model.Comment;
 import com.example.casestudyteam2.model.Post;
+import com.example.casestudyteam2.service.ICommentService;
 import com.example.casestudyteam2.service.IPostService;
 import com.example.casestudyteam2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class PostController {
     private IPostService postService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ICommentService commentService;
 //list post
     @GetMapping()
     public ResponseEntity<Iterable<Post>> findAllPost() {
@@ -68,4 +72,16 @@ public class PostController {
         Optional<Post> postOptional = postService.findById(id);
         return new ResponseEntity<>(postOptional.get(),HttpStatus.OK);
     }
+
+// tìm comment theo post_id
+    @GetMapping("/viewcomment/{idPost}")
+    public ResponseEntity<Iterable<Comment>> findAllCommentByPost(@PathVariable Long idPost){
+        Optional<Post> postOptional =  postService.findById(idPost);
+        if (!postOptional.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Comment> comments = commentService.findAllByPost(postOptional.get());
+        return new ResponseEntity<>(comments, HttpStatus.OK);
+    }
 }
+
