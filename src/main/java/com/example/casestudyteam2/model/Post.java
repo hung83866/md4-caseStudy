@@ -10,10 +10,8 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPost;
 
-//    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
     private String content;
 
-//    @Max(value = 1000 , message = "Value should be less then then equal to 1000")
     private String status;
 
     private String video;
