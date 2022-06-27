@@ -1,7 +1,5 @@
 package com.example.casestudyteam2.model;
 
-import net.bytebuddy.implementation.bind.annotation.Default;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -26,9 +24,8 @@ public class Post {
 
     private int likes = 0;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "post_comment", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
-    private Set<Comment> comments;
+
+
     private String time;
 
     public String getTime() {
@@ -50,7 +47,6 @@ public class Post {
         this.imageFile = imageFile;
         this.userPost = userPost;
         this.likes = likes;
-        this.comments = comments;
     }
 
     public Long getIdPost() {
@@ -109,11 +105,4 @@ public class Post {
         this.likes = likes;
     }
 
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
 }

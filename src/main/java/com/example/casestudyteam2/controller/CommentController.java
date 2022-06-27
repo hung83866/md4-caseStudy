@@ -41,6 +41,24 @@ public class CommentController {
         commentService.save(comment);
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{idComment}")
+    public ResponseEntity<Comment> removeCmt(@PathVariable Long idComment){
+        commentService.remove(idComment);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{idComment}")
+    public ResponseEntity<Comment> update(@PathVariable Long idComment, @RequestBody CommentForm commentForm){
+        Comment comment = new Comment();
+        Comment commentOptional = commentService.findById(idComment);
+        comment.setIdComment(commentOptional.getIdComment());
+        comment.setContent(commentForm.getContent());
+        comment.setUser(userService.findById(commentForm.getIdUser()));
+        comment.setPost(postService.findById(commentForm.getIdPost()).get());
+        commentService.save(comment);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 
 
