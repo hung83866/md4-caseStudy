@@ -1,5 +1,7 @@
 package com.example.casestudyteam2.model;
 
+import net.bytebuddy.implementation.bind.annotation.Default;
+
 import javax.persistence.*;
 import java.util.Set;
 

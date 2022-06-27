@@ -6,10 +6,13 @@ import com.example.casestudyteam2.model.Post;
 import java.util.List;
 
 public interface ICommentService {
+    Iterable<Comment> findAll();
 
     Comment findById(Long id);
 
-    List<Comment> findAllByPostId(Long idPost);
+    void save(Comment comment);
 
-    Comment save(Long postId, Comment comment);
+    void remove(Long id);
+
+    Iterable<Comment> findAllByPost(Post post);
 }
