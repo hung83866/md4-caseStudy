@@ -39,7 +39,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long idPost, String content, String status, String imageUrl, String imageFile, Users userPost, int likes, Set<Comment> comments) {
+    public Post(Long idPost, String content, String status, String imageUrl, String imageFile, Users userPost, int likes) {
         this.idPost = idPost;
         this.content = content;
         this.status = status;
@@ -48,6 +48,7 @@ public class Post {
         this.userPost = userPost;
         this.likes = likes;
     }
+
 
     public Long getIdPost() {
         return idPost;

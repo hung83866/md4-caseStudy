@@ -1,6 +1,7 @@
 package com.example.casestudyteam2.model;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 public class Notice {
@@ -18,6 +19,9 @@ public class Notice {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
+    private String time;
+
+
 
     public Post getPost() {
         return post;
@@ -38,11 +42,31 @@ public class Notice {
     public Notice() {
     }
 
-    public Notice(Long id, String notice, Users usersFrom, Users usersTo) {
+    public Notice(Long id, String notice, Users usersFrom, Users usersTo, boolean status, Post post, String time) {
         this.id = id;
         this.notice = notice;
         this.usersFrom = usersFrom;
         this.usersTo = usersTo;
+        this.status = status;
+        this.post = post;
+        this.time = time;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public Notice(String notice, Users usersFrom, Users usersTo,Post post, String time) {
+        this.notice = notice;
+        this.usersFrom = usersFrom;
+        this.usersTo = usersTo;
+        this.status = true;
+        this.post = post;
+        this.time =time;
     }
 
     public Long getId() {

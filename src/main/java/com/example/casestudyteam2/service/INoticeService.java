@@ -11,7 +11,7 @@ public interface INoticeService {
 
     Optional<Notice> findById(Long id);
 
-    void save(Notice post);
+    void save(Notice notice);
 
     void remove(Long id);
     void remove();
