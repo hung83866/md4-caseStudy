@@ -59,7 +59,15 @@ public class CommentController {
         commentService.save(comment);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/{idComment}")
+    public ResponseEntity<Comment> findByIdCmt(@PathVariable Long idComment){
+        Comment comment = commentService.findById(idComment);
+        return new ResponseEntity<>(comment,HttpStatus.OK);
+    }
 }
+
+
 
 
 
