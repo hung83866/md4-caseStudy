@@ -15,7 +15,7 @@ import java.util.List;
 @Transactional
 public interface ILikePostRepository extends JpaRepository<LikePost, Long> {
 
-    @Query(value = "select count(like_post_id) from like_post group by post_id = :postId", nativeQuery = true)
+    @Query(value = "select count(like_post_id) from like_post group by postid = :postId", nativeQuery = true)
     Integer countLikeOfPostByPostId(Long postId);
     @Query(value = "select * from like_post where post_id = :postId and user_id = :userId", nativeQuery = true)
     List<LikePost> findLikePostByPostIdAndUserId(@Param("postId") Long postId, @Param("userId") Long userId);
