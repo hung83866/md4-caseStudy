@@ -50,6 +50,25 @@ public class NoticeController {
             return new ResponseEntity<>( HttpStatus.OK);
         }
     }
+    @GetMapping("/save/like/{idUser}/{idPost}")
+    public ResponseEntity<Iterable<?>> saveNotice1(@PathVariable Long idUser,@PathVariable Long idPost) {
+        Users usersFrom = userService.findById(idUser);
+
+        Optional<Post> posts = postService.findById(idPost);
+        posts.get().setLikes(posts.get().getLikes()+1);
+        Post post = new Post(posts.get().getIdPost(),posts.get().getContent(),posts.get().getStatus(),posts.get().getImageFile(),posts.get().getImageFile(),posts.get().getUserPost(),posts.get().getLikes());
+        postService.save(post);
+        String notices = usersFrom.getName() + " Liked on the post ";
+        String time = new Date()+"";
+        if (idUser==posts.get().getUserPost().getId()){
+            return new ResponseEntity<>( HttpStatus.OK);
+        }else {
+            Notice notice = new Notice(notices,usersFrom,posts.get().getUserPost(),post,time);
+            noticeService.save(notice);
+            return new ResponseEntity<>( HttpStatus.OK);
+        }
+    }
+
     @GetMapping("/hide/{id}")
     public ResponseEntity<Iterable<?>> hideNotice(@PathVariable Long id){
         Optional<Notice> notice = noticeService.findById(id);

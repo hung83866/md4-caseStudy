@@ -83,5 +83,16 @@ public class PostController {
         Iterable<Comment> comments = commentService.findAllByPost(postOptional.get());
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
+
+    // số lượt like bài viết
+    @GetMapping("/like/{idPost}")
+    public ResponseEntity<Integer> findAllLikeByPost(@PathVariable Long idPost){
+        Optional<Post> postOptional =  postService.findById(idPost);
+        if (!postOptional.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        int like = postOptional.get().getLikes();
+        return new ResponseEntity<>(like, HttpStatus.OK);
+    }
 }
 
