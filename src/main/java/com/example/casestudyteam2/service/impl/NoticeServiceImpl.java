@@ -2,6 +2,7 @@ package com.example.casestudyteam2.service.impl;
 
 import com.example.casestudyteam2.model.Notice;
 import com.example.casestudyteam2.model.Post;
+import com.example.casestudyteam2.model.Users;
 import com.example.casestudyteam2.repository.INoticeRepository;
 import com.example.casestudyteam2.service.INoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class NoticeServiceImpl implements INoticeService {
     }
 
     @Override
-    public Iterable<Notice> findAllByUserTo(Long idUser) {
-        return noticeRepository.findAllByUsersTo(idUser);
+    public Iterable<Notice> findAllByUserTo(Users users) {
+        return noticeRepository.findAllByUsersTo(users);
     }
 }
