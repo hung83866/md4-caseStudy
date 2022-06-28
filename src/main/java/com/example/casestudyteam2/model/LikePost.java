@@ -28,6 +28,10 @@ public class LikePost {
         this.users = users;
     }
 
+    public LikePost() {
+
+    }
+
     public Long getLikePostId() {
         return likePostId;
     }
